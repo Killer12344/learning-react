@@ -1,16 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import List from "./components/List";
 import Form from "./components/Form";
 
 function App() {
-  const inputRef = useRef();
 
   const data = [
     {
-      name : 'Homework'
+      name : 'Homework',
+      done : false,
+      id : 1,
     },
     {
-      name : 'Coding'
+      name : 'Coding',
+      done : false,
+      id : 2,
     },
   ];
 
@@ -18,7 +21,25 @@ function App() {
 
 
   const handleClick = (data) => {
-    setItems([{ name : data }, ...items]);
+    if (data != '') {
+      setItems([{ name : data, done : false, id : items.length+1 }, ...items]);
+    } else {
+      alert("Please enter something!");
+    }
+  }
+
+  const handleCheck = (id) => {
+    setItems(items.map(item => {
+      if (id == item.id) {
+        if (item.done) {
+          return { name : item.name, done: false, id: item.id }          
+        }else{
+          return { name : item.name, done: true, id: item.id }
+        }
+      } else {
+        return item;
+      }
+    }));
   }
 
 
@@ -31,8 +52,8 @@ function App() {
           <Form clicking={handleClick} />
 
           <ul className="text-sm font-medium text-gray-900 bg-white border border-gray-400 border-b-0 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-            { items.map((item, index)=>(
-              <List item={item} key={index} />
+            { items.map(item => (
+              <List checkout={handleCheck} id={item.id} item={item} key={item.id} />
             )) }
           </ul>
         </div>
