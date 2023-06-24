@@ -28,6 +28,22 @@ function App() {
     }
   }
 
+  const handleDelete = (id) => {
+    setItems(items.filter( item =>{
+      if (item.id != id) {
+        return item;
+      }
+    }));
+  }
+
+  const handleEdit = (id) => {
+    const oldData = items.find(i=>i.id == id);
+    const value = prompt("Enter new values", oldData.name);
+    if (value) {
+      setItems(items.map(item => id == item.id ? { name: value, done: false, id: id } : item));      
+    }
+  }
+
   const handleCheck = (id) => {
     setItems(items.map(item => {
       if (id == item.id) {
@@ -53,7 +69,7 @@ function App() {
 
           <ul className="text-sm font-medium text-gray-900 bg-white border border-gray-400 border-b-0 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
             { items.map(item => (
-              <List checkout={handleCheck} id={item.id} item={item} key={item.id} />
+              <List edit={handleEdit} deleteData={handleDelete} checkout={handleCheck} id={item.id} item={item} key={item.id} />
             )) }
           </ul>
         </div>
