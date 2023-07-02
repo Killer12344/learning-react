@@ -19,6 +19,13 @@ function App() {
 
   const [items, setItems] = useState(data);
 
+  const [count, setCount] = useState(0);
+
+  const handelCount = (data) => {
+    // setCount(pre => {
+    //   return pre + 1;
+    // })
+  }
 
   const handleClick = (data) => {
     if (data != '') {
