@@ -1,33 +1,33 @@
 import React, { useContext, useState } from "react";
-import Input from "./components/Input";
-import ComponentOne from "./components/Effect/ComponentOne";
-import ComponentTwo from "./components/Effect/ComponentTwo";
-import Testing from "./components/Testing";
-import { ThemeContext, FontContext } from "./Context/Test";
+import Home from "./pages/Home";
+import Contact from "./pages/Contact";
+import About from "./pages/About";
+import Error from "./pages/Error";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Nest from "./pages/Nest";
+import OneNest from "./pages/Nest/OneNest";
+import TwoNest from "./pages/Nest/TwoNest";
 
-function App() {
-
-  const [bool, setBool] = useState(true);
-  const theme = useContext(ThemeContext);
-  const font  = useContext(FontContext);
+function App () {
 
   return (
-    <div className="App bg-slate-300 h-screen">
-      <div className="p-6">
-        <div className="w-1/5">
-          {/* { !bool && 'Yes is True'} */}
-          {/* <button className="btn-blue" onClick={()=>setBool(pre=> !pre)}> Click Me </button> */}
-          {/* <Input />   */}
-          {/* <ComponentOne /> */}
-          {/* <ComponentTwo /> */}
-          <Testing title={font}>
-            <button className={theme}>
-              Click
-            </button>
-          </Testing>
-        </div>
-      </div>
-    </div>
+    <div className="container mx-auto w-screen ">
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact/:id" element={<Contact />} />
+          <Route path="/nest" element={<Nest />} >
+            <Route index element={<OneNest />} />
+            <Route path="two" element={<TwoNest />} />
+          </Route>
+          <Route path="*" element={<Error />} />
+        </Routes>
+      </Router>
+    </div >
+
   );
 }
 export default App;
