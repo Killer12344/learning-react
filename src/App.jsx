@@ -8,7 +8,8 @@ import Navbar from "./components/Navbar";
 import Nest from "./pages/Nest";
 import OneNest from "./pages/Nest/OneNest";
 import TwoNest from "./pages/Nest/TwoNest";
-
+import MealIndex from "./pages/Meat/Index";
+import MealShow from "./pages/Meat/Show";
 function App () {
 
   return (
@@ -18,6 +19,8 @@ function App () {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/meat" element={<MealIndex />} />
+          <Route path="/meat/:id" element={<MealShow />} />
           <Route path="/contact/:id" element={<Contact />} />
           <Route path="/nest" element={<Nest />} >
             <Route index element={<OneNest />} />

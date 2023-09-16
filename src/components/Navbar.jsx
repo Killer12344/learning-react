@@ -1,9 +1,8 @@
-import React from 'react'
 import { Link } from "react-router-dom";
 
 function Navbar () {
     return (
-        <div className='bg-slate-300 my-2 p-1 rounded-md'>
+        <div className=' border-slate-200 border bg-slate-100 mt-2 mb-5 py-2 rounded-md'>
             <ul className='flex'>
                 <li className='mx-3 p-2'>
                     <Link to={'/'}>Home</Link>
