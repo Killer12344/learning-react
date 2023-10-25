@@ -19,8 +19,6 @@ function About () {
     }
   }, [query]);
 
-  console.log(pathname);
-
   return (
     <div>
       <form ref={formRef}>
