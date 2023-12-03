@@ -1,26 +1,53 @@
-import React from 'react'
-import { Button, TextInput as Input } from 'flowbite-react';
-import { useNavigate } from "react-router-dom";
-import { useRef } from 'react';
+import React, { useState } from "react";
+import useFetchData from "../useFetchData";
+import PokieCard from "../components/PokieCard";
 
-function Home () {
+function Home() {
+  const [uri, setUri] = useState("https://pokeapi.co/api/v2/pokemon");
 
-    const inputRef = useRef();
-    const nav = useNavigate();
+  const { data: pokes, pending } = useFetchData(uri);
 
-    return (
-        <div>
-            <h1 className='mb-3'>
-                Home
-            </h1>
-            <div className='flex'>
-                <Input ref={inputRef} className='me-3' placeholder='Enter Search' />
-                <Button onClick={() => nav('/contact/1', { state: { text: inputRef.current.value } })} color="dark">
-                    Go to Contact
-                </Button>
-            </div>
-        </div>
-    )
+  return (
+    <div>
+      {pending ? (
+        "Loading..."
+      ) : (
+        <>
+          <div className="grid grid-cols-6 gap-5 mb-5">
+            {pokes.results.map((element, index) => (
+              <PokieCard
+                key={index}
+                img={`https://img.pokemondb.net/artwork/large/${element.name}.jpg`}
+                title={element.name}
+                path={element.url}
+              />
+            ))}
+          </div>
+
+          <div className="mb-3 text-end">
+            <button
+              className={`w-36 rounded-sm py-2 me-3 ${
+                pokes.previous ? "bg-purple-500" : "bg-slate-300"
+              }`}
+              onClick={() => setUri(pokes.previous)}
+              disabled={!pokes.previous}
+            >
+              Previous
+            </button>
+            <button
+              className={`w-36 rounded-sm py-2 me-3 ${
+                pokes.next ? "bg-purple-500" : "bg-slate-400"
+              }`}
+              onClick={() => setUri(pokes.next)}
+              disabled={!pokes.next}
+            >
+              Next
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
 
-export default Home
+export default Home;
